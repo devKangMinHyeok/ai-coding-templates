@@ -20,7 +20,7 @@ source: auto/interview
 - **Firebase**: NoSQL(Firestore)이라 관계형 데이터에 부적합, 쿼리 제약이 많음
 - **PlanetScale**: MySQL 기반, 무료 플랜 축소/폐지 이력
 - **Neon**: PostgreSQL 서버리스, 좋지만 Supabase보다 부가 기능이 적음
-- **로컬 SQLite**: 배포 시 데이터 유지 불가, 학습용으로만 가능
+- **로컬 SQLite**: 배포 시 데이터 유지 불가, 로컬 개발에서만 가능
 
 ## 되돌릴 조건
 무료 플랜 한도를 넘기거나, PostgreSQL이 아닌 DB가 필요해지면 재검토.
