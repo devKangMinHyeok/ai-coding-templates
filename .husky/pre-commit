@@ -4,4 +4,31 @@ echo "🔒 커밋 전 검증 중... (타입·린트·테스트)"
 pnpm type-check || { echo "❌ 타입 에러. 고치고 다시 커밋하세요."; exit 1; }
 pnpm lint || { echo "❌ 린트 에러. 고치고 다시 커밋하세요."; exit 1; }
 pnpm test || { echo "❌ 테스트 실패. 고치고 다시 커밋하세요."; exit 1; }
+
+# 테스트 커버리지 경고: 순수 로직 파일에 테스트가 없으면 알려줍니다.
+# (경고만 하고 차단하지는 않습니다 — 차단은 /review qa가 담당)
+echo ""
+echo "🧪 테스트 커버리지 확인 중..."
+MISSING_TESTS=""
+CHANGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx)$' | grep -vE '\.(test|spec)\.(ts|tsx)$' || true)
+for f in $CHANGED_FILES; do
+  # server/ 또는 lib/ 아래 순수 로직 파일만 체크
+  if echo "$f" | grep -qE '^(server|lib)/'; then
+    # 같은 위치에 .test.ts 가 있는지 확인
+    BASE="${f%.*}"
+    if [ ! -f "${BASE}.test.ts" ] && [ ! -f "${BASE}.test.tsx" ] && [ ! -f "${BASE}.spec.ts" ]; then
+      MISSING_TESTS="$MISSING_TESTS\n  ⚠️  $f → 테스트 파일 없음"
+    fi
+  fi
+done
+
+if [ -n "$MISSING_TESTS" ]; then
+  echo -e "📋 테스트가 없는 순수 로직 파일:$MISSING_TESTS"
+  echo ""
+  echo "💡 순수 로직(계산·변환·검증)이면 테스트를 추가하세요."
+  echo "   UI 컴포넌트나 설정 파일이면 무시해도 됩니다."
+  echo "   (이 경고는 커밋을 막지 않습니다. /review qa 에서 깊이 검사합니다)"
+  echo ""
+fi
+
 echo "✅ 통과. 커밋합니다."

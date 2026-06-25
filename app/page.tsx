@@ -2,9 +2,10 @@ import Link from "next/link";
 
 export default function Home() {
   const steps = [
-    { cmd: "/interview", desc: "질답으로 오늘 만들 것을 좁힌다 (구현 전)" },
+    { cmd: "/init", desc: "환경 정리 + 사용법 소개 + 프로젝트 방향 잡기 (처음 한 번)" },
+    { cmd: "/spec", desc: "만들 기능을 질답으로 구체화한다" },
     { cmd: "/impl", desc: "스펙을 작게 나눠 구현한다 (단계마다 검증)" },
-    { cmd: "/review", desc: "배포 전 스스로 점검한다" },
+    { cmd: "/review", desc: "배포 전 전문가 관점으로 점검한다" },
     { cmd: "/ship", desc: "커밋·푸시 → Vercel 자동 배포 → 내 URL" },
   ];
 
@@ -26,9 +27,9 @@ export default function Home() {
           <p className="mb-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">
             시작하려면 Claude Code에서{" "}
             <code className="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100">
-              /help
+              /init
             </code>{" "}
-            를 입력하세요.
+            을 입력하세요.
           </p>
           <ol className="space-y-3">
             {steps.map((s, i) => (
@@ -53,8 +54,9 @@ export default function Home() {
         </Link>
 
         <p className="mt-6 text-sm text-zinc-500 dark:text-zinc-500">
-          이 페이지는 출발점입니다. <code className="font-mono">/interview</code> 로 오늘 만들 것을
-          정한 뒤, 이 화면부터 당신의 것으로 바꿔 나가세요.
+          이 페이지는 출발점입니다. <code className="font-mono">/init</code> 으로 시작한 뒤,
+          이 화면부터 당신의 것으로 바꿔 나가세요. 언제든{" "}
+          <code className="font-mono">/help</code> 로 도움을 받을 수 있습니다.
         </p>
       </div>
     </main>

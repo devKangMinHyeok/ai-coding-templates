@@ -8,6 +8,11 @@
             "type": "command",
             "command": "echo '🔔 파일이 바뀌었어요. 작업을 끝내기 전에 /verify 로 검증하세요 (타입·린트·빌드).'",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/check-test-coverage.sh",
+            "timeout": 5
           }
         ]
       }

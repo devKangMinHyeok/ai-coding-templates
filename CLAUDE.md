@@ -12,12 +12,26 @@
 
 ## 황금 규칙 (항상 지킨다)
 
-1. **만들기 전에 `/interview`.** 막연한 요청이 오면 코드부터 짜지 말고, 질답으로 무엇을 만들지부터 좁힌다.
-2. **구현은 `/impl` 로.** 스펙이 확정된 뒤에만 구현을 시작한다.
-3. **작게 만든다.** 한 번에 기능 하나.
-4. **`/verify` 통과 전에는 "다 됐다"고 말하지 않는다.** (타입·린트·테스트·빌드 초록불)
-5. **항상 좋은 코드·구조로.** 코드 `conventions`, 화면 `ui-design`, 구조 `architecture`, 서버 `server-architecture`, 저장 `database`, 테스트 `testing`.
-6. **반복되는 문제는 구조로 막는다.** 같은 에러가 두 번 나오면 재현 테스트를 남긴다.
+1. **프로젝트를 시작할 때 `/interview`.** 미션(`spec/mission.md`)을 먼저 세운다.
+2. **기능을 만들기 전에 `/spec`.** 막연한 요청이 오면 코드부터 짜지 말고, 질답으로 무엇을 만들지부터 좁힌다.
+3. **구현은 `/impl` 로.** 스펙이 확정된 뒤에만 구현을 시작한다.
+4. **작게 만든다.** 한 번에 기능 하나.
+5. **`/verify` 통과 전에는 "다 됐다"고 말하지 않는다.** (타입·린트·테스트·빌드 초록불)
+6. **배포 전에 `/review`.** 전문가 관점으로 점검한다. `/ship`이 자동으로 확인하지만, 미리 돌려두면 좋다.
+7. **항상 좋은 코드·구조로.** 코드 `conventions`, 화면 `ui-design`, 구조 `architecture`, 서버 `server-architecture`, 저장 `database`, 테스트 `testing`.
+8. **반복되는 문제는 구조로 막는다.** 같은 에러가 두 번 나오면 재현 테스트를 남긴다.
+9. **mission의 "안 할 것"은 절대 넘지 않는다.** 사용자가 요청해도 먼저 mission 수정을 권한다.
+10. **배운 것과 결정은 기록한다.** 삽질·발견은 `/learn`, 설계 결정은 `/decision`으로 남긴다.
+
+## 미션 & 스펙
+
+- **`spec/mission.md`** — 프로젝트 전체의 나침반. 한 줄 정의, 핵심 원칙, 안 할 것. 모든 설계 판단에서 먼저 확인한다.
+- **`spec/spec.md`** — 지금 만들고 있는 기능의 구체적 스펙. mission에 정렬되어야 한다.
+
+## 배움 & 결정 기록
+
+- **`learnings/`** — 작업 중 배운 것(삽질, 발견, 패턴). 세션 간 지식이 축적된다.
+- **`decisions/`** — 설계 결정의 이유. "왜 이렇게 했지?"를 나중에 찾을 수 있다.
 
 ## 생각 규칙 — 모든 설계 판단의 첫 질문 (결정적 vs 비결정적)
 - **결정적(기계가 채점: 빌드·타입·테스트·린트)** → 자동 검증으로 **강제**.
@@ -27,7 +41,9 @@
 
 | 상황 | 사용할 스킬 |
 | --- | --- |
-| 뭘 만들지 정하기 / 새 아이디어 | `/interview` |
+| 템플릿 처음 받았을 때 | `/init` |
+| 프로젝트 시작 / 방향 정하기 | `/interview` |
+| 기능 구체화 / 스펙 만들기 | `/spec` |
 | 스펙대로 실제 구현 | `/impl` |
 | 구조·저장·우선순위 등 설계 판단 | `architecture` |
 | 서버 코드(저장·외부연동·비밀키) 구조 | `server-architecture` |
@@ -38,10 +54,13 @@
 | 코드 바꾼 뒤 검증 | `/verify` |
 | 배포 전 점검 | `/review` |
 | 배포 | `/ship` |
+| 배운 것 기록 | `/learn` |
+| 설계 결정 기록 | `/decision` |
+| 커스텀 리뷰 프로필 추가 | `/add-review-profile` |
 | 뭐부터 할지 모를 때 | `/help` |
 
 ## 표준 흐름
-`/interview` → `/impl`(`architecture`·`server-architecture`·`database`·`conventions`·`ui-design`·`testing` 적용 + `/verify` 반복) → `/review` → `/ship`
+`/init`(처음 한 번) → `/interview` → `/spec` → `/impl`(`architecture`·`server-architecture`·`database`·`conventions`·`ui-design`·`testing` 적용 + `/verify` 반복) → `/review` → `/ship`
 
 ## 서버·저장 구조 (요약)
 - 서버 코드는 `server/<도메인>/` 레이어: `model`(순수) · `repo`(포트) · `repo.memory`/`repo.supabase`(어댑터) · `service` · `index`(배럴). 자세히는 `server-architecture`.
